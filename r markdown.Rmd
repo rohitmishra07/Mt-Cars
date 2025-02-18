@@ -1,0 +1,175 @@
+---
+title: "R-markdown-mtcars"
+author: "Satvik Ahlawat, Rohit Mishra, Janhvee Awasthi"
+date: "2025-02-17"
+output: html_document
+---
+##  R Markdown Introduction
+This report presents an exploratory analysis of the `mtcars` dataset Submited by Satvik Ahlawat(24221042) [Linkedin Profile](https://www.linkedin.com/in/satvikahlawat/), Rohit Mishra(24221139) [Linkedin Profile](https://www.linkedin.com/in/rohit-mishra-a6689031b/), Janhvee Awasthi(24221120) [Linkedin Profile](https://www.linkedin.com/in/janhvee-awasthi-378912239/), which contains 32 car models and their respective specifications, such as horsepower, fuel efficiency, weight, and transmission types. The goal of this study is to analyze different car attributes and provide business implications based on statistical insights.
+
+# Data Dictionary
+The `mtcars` dataset consists of 32 car models and their respective horsepower values (`hp`).
+
+## Corrected Data Dictionary: Car Models & Horsepower
+```{r}
+# Creating a vector of Horsepower values
+horsepower <- c(110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180, 
+                205, 215, 230, 66, 52, 65, 97, 150, 150, 245, 175, 66, 91, 113, 
+                264, 175, 335, 109)
+
+# Assigning car model names to the horsepower values
+names(horsepower) <- c("Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", 
+                       "Hornet Sportabout", "Valiant", "Duster 360", "Merc 240D", 
+                       "Merc 230", "Merc 280", "Merc 280C", "Merc 450SE", "Merc 450SL", 
+                       "Merc 450SLC", "Cadillac Fleetwood", "Lincoln Continental", 
+                       "Chrysler Imperial", "Fiat 128", "Honda Civic", "Toyota Corolla", 
+                       "Toyota Corona", "Dodge Challenger", "AMC Javelin", "Camaro Z28", 
+                       "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lotus Europa", 
+                       "Ford Pantera L", "Ferrari Dino", "Maserati Bora", "Volvo 142E")
+
+# Printing the entire Horsepower Data Dictionary
+print(horsepower)
+# Retrieving the horsepower of a specific car model
+horsepower["Mazda RX4"]
+horsepower["Ferrari Dino"]
+
+# Print structure of the dataset
+str(horsepower)
+```
+
+#. Create an assigned task amongst features
+```{r}
+#a. Importing the dataset with proper variable names
+data_dictionary <- data.frame(
+  Column_Name = c("mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb"),
+  Description = c(
+    "Miles per gallon (fuel efficiency)",
+    "Number of cylinders",
+    "Engine displacement (cubic inches)",
+    "Horsepower",
+    "Rear axle ratio",
+    "Weight of the car (1000 lbs)",
+    "1/4 mile time (acceleration)",
+    "Engine type (0 = V-shaped, 1 = Straight)",
+    "Transmission (0 = Automatic, 1 = Manual)",
+    "Number of forward gears",
+    "Number of carburetors"
+  ),
+  Data_Type = c("Numeric", "Integer", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Categorical", "Categorical", "Integer", "Integer")
+)
+print("Data Dictionary:")
+print(data_dictionary)
+
+##summary 
+# B - summary of the mtcars
+```{r}
+summary(mtcars)
+```
+#Data Visualization
+```{r}
+# Load the built-in dataset
+data(mtcars)
+# Histogram of Horsepower (hp)
+hist(mtcars$hp, 
+     col=rainbow(10),  # Generates colorful bars
+     main="Horsepower Distribution", 
+     xlab="Horsepower", 
+     ylab="Frequency", 
+     border="black", 
+     breaks=10)
+
+# Histogram of Miles Per Gallon (mpg)
+hist(mtcars$mpg, 
+     col="lightblue",  # Simple color
+     main="Fuel Efficiency Distribution",
+     xlab="Miles Per Gallon",
+     ylab="Frequency",
+     border="black",
+     breaks=10)
+
+# Scatter Plot of Horsepower (hp) vs Fuel Efficiency (mpg)
+plot(mtcars$hp, mtcars$mpg, 
+     main="Horsepower vs Fuel Efficiency",
+     xlab="Horsepower", 
+     ylab="Miles Per Gallon", 
+     col="red", 
+     pch=19)  # pch=19 gives solid dots
+
+# Adding a simple trend line
+abline(lm(mpg ~ hp, data=mtcars), col="blue", lwd=2)  # Linear regression line
+```
+
+# Business Implications
+This section highlights the key business insights derived from the analysis of the mtcars dataset. These implications are important for automobile manufacturers, marketers, and consumers in making data-driven decisions.
+
+---
+
+## Fuel Efficiency vs Horsepower
+Finding:  
+- Cars with higher horsepower (hp) have lower fuel efficiency (mpg).  
+- There is a negative correlation between horsepower and miles per gallon.
+
+Implications for Business:  
+- Car manufacturers should optimize powertrain efficiency to balance performance and fuel economy.  
+- Marketing strategy should highlight fuel-efficient models for eco-conscious buyers.  
+- Government regulations may impose higher taxes on fuel-inefficient vehicles, affecting pricing.
+
+---
+
+## Weight vs Performance
+Finding:  
+- Heavier cars (wt) tend to have lower mpg and slower acceleration (qsec).  
+- Lighter cars generally have better fuel efficiency and faster acceleration.
+
+Implications for Business:  
+- Automobile companies should focus on lightweight materials (e.g., aluminum, carbon fiber) for fuel efficiency.  
+- Performance car brands must balance weight reduction with safety and stability.  
+- Government policies favoring lower emissions will push brands to develop hybrid/electric lightweight cars.
+
+---
+
+## Transmission Type: Manual vs Automatic
+Finding:  
+- Manual transmission (am = 1) cars generally have better fuel efficiency than automatic (am = 0) cars.  
+- Automatic cars tend to be heavier and consume more fuel.
+
+Implications for Business:  
+- Luxury car brands should enhance automatic transmission efficiency (e.g., CVT, dual-clutch).  
+- Car dealerships should educate customers on the trade-offs between automatic and manual transmission.  
+- Sports car segment should continue offering manual transmissions for enthusiasts.
+
+---
+
+## Cylinder Count & Market Positioning
+Finding:  
+- Higher cylinder (cyl) count leads to increased power but reduced fuel economy.  
+- 4-cylinder cars are the most fuel-efficient.  
+- 8-cylinder cars dominate high-performance and luxury segments.
+
+Implications for Business:  
+- Mass-market car brands (Toyota, Honda) should focus on fuel-efficient 4-cylinder models.  
+- Luxury & sports car brands (Ferrari, BMW, Audi) should cater to enthusiasts who prefer 6-8 cylinder performance cars.  
+- EV (Electric Vehicle) manufacturers can use these insights to target high-performance EVs with battery optimization.
+
+---
+
+## Gear Count and Vehicle Efficiency
+Finding:  
+- Cars with more gears (gear = 5 or 6) have better performance and efficiency.  
+- Lower-gear cars (gear = 3) are less efficient and are often heavier models.
+
+Implications for Business:  
+- Manufacturers should focus on 6-speed+ transmissions for better efficiency and smoother driving experience.  
+- High-performance brands should optimize gear ratios for acceleration and speed.  
+- Hybrid & Electric Vehicles (EVs) should integrate advanced gear systems for power optimization.
+
+---
+
+## Conclusion
+- The mtcars dataset provides valuable insights into automobile performance and efficiency.  
+- Car manufacturers can use this data to improve fuel efficiency, optimize performance, and enhance transmission systems.  
+- Consumers can make informed decisions on buying a car based on horsepower, fuel efficiency, and transmission type.  
+- Future innovations in lightweight materials, hybrid engines, and multi-gear transmissions will shape the automobile industry.  
+
+---
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
